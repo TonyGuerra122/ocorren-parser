@@ -14,8 +14,8 @@ Adicione a dependência no seu `pom.xml`:
 
 ```xml
 <dependency>
-  <groupId>com.tonyguerra</groupId>
-  <artifactId>ocorrenparser</artifactId>
+  <groupId>com.tonyguerra.ocorrenparser</groupId>
+  <artifactId>ocorren-parser</artifactId>
   <version>1.0.0</version>
 </dependency>
 ```
