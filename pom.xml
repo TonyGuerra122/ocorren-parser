@@ -21,4 +21,11 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub TonyGuerra122 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/TonyGuerra122/ocorren-parser</url>
+        </repository>
+    </distributionManagement>
 </project>
