@@ -12,22 +12,22 @@ Projetado para uso com integrações EDI ou sistemas legados que utilizam regist
 
 - Adicione o reposiótio do JitPack ao `pom.xml`:
 ```xml
-<repositories>
-	<repository>
-		<id>jitpack.io</id>
-		<url>https://jitpack.io</url>
-	</repository>
-</repositories>
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
 ```
 
 Adicione a dependência no seu `pom.xml`:
 
 ```xml
-<dependency>
-	<groupId>com.github.TonyGuerra122</groupId>
-	<artifactId>ocorren-parser</artifactId>
-	<version>1.0.0</version>
-</dependency>
+  <dependency>
+    <groupId>com.github.TonyGuerra122</groupId>
+    <artifactId>ocorren-parser</artifactId>
+    <version>1.0.0</version>
+  </dependency>
 ```
 
 ---
