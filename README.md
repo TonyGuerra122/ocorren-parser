@@ -20,7 +20,7 @@ Projetado para uso com integrações EDI ou sistemas legados que utilizam regist
   </repositories>
 ```
 
-Adicione a dependência no seu `pom.xml`:
+- Adicione a dependência no seu `pom.xml`:
 
 ```xml
   <dependency>
