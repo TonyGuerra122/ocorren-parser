@@ -110,7 +110,9 @@ public final class RecordParser {
 
             if (!value.isEmpty()) {
                 if (def.alphanumeric() && !value.matches("[\\p{L}\\p{N}\\s]+")) {
-                    throw new IllegalArgumentException("Field '" + fieldName + "' must be alphanumeric");
+                    if (!fieldName.equalsIgnoreCase("FILLER") || !value.isBlank()) {
+                        throw new IllegalArgumentException("Field '" + fieldName + "' must be alphanumeric");
+                    }
                 }
                 if (!def.alphanumeric() && !value.matches("\\d+")) {
                     throw new IllegalArgumentException("Field '" + fieldName + "' must be numeric");

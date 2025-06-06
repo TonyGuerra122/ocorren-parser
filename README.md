@@ -26,7 +26,7 @@ Projetado para uso com integrações EDI ou sistemas legados que utilizam regist
   <dependency>
     <groupId>com.github.TonyGuerra122</groupId>
     <artifactId>ocorren-parser</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
   </dependency>
 ```
 
