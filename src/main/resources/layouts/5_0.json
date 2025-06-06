@@ -1,0 +1,403 @@
+{
+    "000": {
+        "IDENFIFICADOR DO REMETENTE": {
+            "alphanumeric": true,
+            "length": 35,
+            "position": 4,
+            "mandatory": true,
+            "description": "NOME DA CAIXA POSTAL DO REMETENTE"
+        },
+        "IDENTIFICACAO DO DESTINATARIO": {
+            "alphanumeric": true,
+            "length": 35,
+            "position": 39,
+            "mandatory": true,
+            "description": "NOME DA CAIXA POSTAL DO DESTINATÁRIO"
+        },
+        "DATA": {
+            "alphanumeric": false,
+            "length": 6,
+            "position": 74,
+            "mandatory": true,
+            "description": "DDMMAA (ESTA DATA É DE USO DA APLICAÇÃO)"
+        },
+        "HORA": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 80,
+            "mandatory": true,
+            "description": "HHMM"
+        },
+        "IDENTIFICACAO DE INTERCAMBIO": {
+            "alphanumeric": true,
+            "length": 12,
+            "position": 84,
+            "mandatory": true,
+            "description": "SUGESTÃO: OCO50DDMM999\nOCO50 = CONSTANTE OCOrrência+Versão 50\nDDMM= DIA/MÊS\nSSS = SEQUÊNCIA DE 0000 A 999"
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 155,
+            "position": 96,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "540": {
+        "IDENTIFICACAO DE DOCUMENTO": {
+            "alphanumeric": true,
+            "length": 14,
+            "position": 4,
+            "mandatory": true,
+            "description": "SUGESTÃO: OCORR50DDMM999\nOCORR50 = Constante OCORRência+Versão 50\nDDMM = DIA/MÊS\nSSS = SEQUÊNCIA DE 000 A 200"
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 233,
+            "position": 18,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "541": {
+        "CNPJ (CGC) DA TRANSPORTADORA": {
+            "alphanumeric": false,
+            "length": 14,
+            "position": 4,
+            "mandatory": true,
+            "description": ""
+        },
+        "RAZAO SOCIAL DA TRANSPORTADORA": {
+            "alphanumeric": true,
+            "length": 50,
+            "position": 18,
+            "mandatory": false
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 183,
+            "position": 68,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "542": {
+        "CNPJ DO EMISSOR DA NOTA FISCAL": {
+            "alphanumeric": false,
+            "length": 14,
+            "position": 4,
+            "mandatory": true,
+            "description": "CNPJ DO EMBARCADOR"
+        },
+        "SERIE DA NOTA FISCAL": {
+            "alphanumeric": true,
+            "length": 3,
+            "position": 18,
+            "mandatory": true
+        },
+        "NUMERO DA NOTA FISCAL": {
+            "alphanumeric": false,
+            "length": 9,
+            "position": 21,
+            "mandatory": true
+        },
+        "CODIGO DE OCORRENCIA NA ENTREGA": {
+            "alphanumeric": false,
+            "length": 3,
+            "position": 30,
+            "mandatory": true,
+            "description": "Consulte tabela de códigos disponíveis no layout"
+        },
+        "DATA DA OCORRENCIA": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 33,
+            "mandatory": true,
+            "description": "DDMMAAAA"
+        },
+        "HORA DA OCORRENCIA": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 41,
+            "mandatory": false,
+            "description": "HHMM"
+        },
+        "CÓDIGO DE OBSERVAÇÃO DE OCORRÊNCIA NA ENTRADA": {
+            "alphanumeric": false,
+            "length": 2,
+            "position": 45,
+            "mandatory": false,
+            "description": "01 = Devolução/recusa total\n02 = Devolução/recusa parcial\n03 = Aceite/entrega por acordo\n04 = Devolução/recusa total com NF devolução\nemitida pelo destinatário\n05 = Devolução/recusa parcial c/ NF devolução emitida pelo destinatário"
+        },
+        "IDENTIFICACAO DO EMBARQUE": {
+            "alphanumeric": true,
+            "length": 20,
+            "position": 47,
+            "mandatory": false,
+            "description": "Gravar informação recebida no arquivo NOTFIS\ncampo 23, pos. 125, reg. 505. Preenchimento\nobrigatório dependendo do parceiro."
+        },
+        "IDENTIFICACAO DO EMBARQUE #1": {
+            "alphanumeric": true,
+            "length": 20,
+            "position": 67,
+            "mandatory": false,
+            "description": "Gravar informação recebida no arquivo NOTFIS\ncampo 24, pos. 145, reg. 505. Preenchimento\nobrigatório conforme o parceiro."
+        },
+        "IDENTIFICACAO DO EMBARQUE #2": {
+            "alphanumeric": true,
+            "length": 20,
+            "position": 87,
+            "mandatory": false,
+            "description": "Gravar informação recebida no arquivo NOTFIS\ncampo 25, pos. 165, reg. 505. Preenchimento\nobrigatório dependendo do parceiro."
+        },
+        "IDENTIFICACAO DO EMBARQUE #3": {
+            "alphanumeric": true,
+            "length": 20,
+            "position": 107,
+            "mandatory": false,
+            "description": "Gravar informação recebida no arquivo NOTFIS\ncampo 26, pos. 185, reg. 505. Preenchimento\nobrigatório dependendo do parceiro."
+        },
+        "FILIAL EMISSORA DO CONHECIMENTO": {
+            "alphanumeric": true,
+            "length": 10,
+            "position": 127,
+            "mandatory": false,
+            "description": "Ref. conhecimento gerado p/transp. da NF"
+        },
+        "SERIE DO CONHECIMENTO": {
+            "alphanumeric": true,
+            "length": 5,
+            "position": 137,
+            "mandatory": false,
+            "description": "Ref. conhecimento gerado p/transp. da NF"
+        },
+        "NUMERO DO CONHECIMENTO": {
+            "alphanumeric": true,
+            "length": 12,
+            "position": 142,
+            "mandatory": false,
+            "description": "Ref. conhecimento gerado p/transp. da NF"
+        },
+        "INDICACAO DO TIPO DE ENTREGA": {
+            "alphanumeric": true,
+            "length": 1,
+            "position": 154,
+            "mandatory": false,
+            "description": "1 = Primeira entrega\n2 = Reentrega a pedido do embarcador\n3 = Reentrega a pedido do destinatário\n4 = Reentrega a pedido transportador de origem"
+        },
+        "CODIGO DA EMPRESA EMISSORA DA NOTA FISCAL": {
+            "alphanumeric": true,
+            "length": 5,
+            "position": 155,
+            "mandatory": false
+        },
+        "CODIGO DA FILIAL DA EMPRESA EMISSORA DA NF": {
+            "alphanumeric": true,
+            "length": 5,
+            "position": 160,
+            "mandatory": false
+        },
+        "DATA DA CHEGADA NO DESTINO DA NF": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 165,
+            "mandatory": false,
+            "description": "DDMMAAAA – DATA DO PROCESSO"
+        },
+        "HORA DA CHEGADA NO DESTINO DA NF": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 173,
+            "mandatory": false,
+            "description": "HHMM – HORA DO PROCESSO"
+        },
+        "DATA DO INICIO DO DESCARREGAMENTO NO DESTINO": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 177,
+            "mandatory": false,
+            "description": "DDMMAAAA – DATA DO PROCESSO"
+        },
+        "HORA DO INICIO DO DESCARREGAMENTO NO DESTINO": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 185,
+            "mandatory": false,
+            "description": "HHMM – HORA DO PROCESSO"
+        },
+        "DATA DO TERMINO DO DESCARREGAMENTO NO DESTINO": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 189,
+            "mandatory": false,
+            "description": "DDMMAAAA – DATA DO PROCESSO"
+        },
+        "HORA DO TERMINO DO DESCARREGAMENTO NO DESTINO": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 197,
+            "mandatory": false,
+            "description": "HHMM – HORA DO PROCESSO"
+        },
+        "DATA DE SAIDA DO DESTINO DA NF": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 201,
+            "mandatory": false,
+            "description": "DDMMAAAA – DATA DO PROCESSO"
+        },
+        "HORA DA SAIDA DO DESTINO DA NF": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 209,
+            "mandatory": false,
+            "description": "HHMM – HORA DO PROCESSO"
+        },
+        "CNPJ DO EMISSOR DA NOTA FISCAL DEVOLUCAO": {
+            "alphanumeric": false,
+            "length": 14,
+            "position": 213,
+            "mandatory": false
+        },
+        "SERIE DA NOTA FISCAL DEVOLUCAO": {
+            "alphanumeric": true,
+            "length": 3,
+            "position": 227,
+            "mandatory": false
+        },
+        "NUMERO DA NOTA FISCAL DEVOLUCAO": {
+            "alphanumeric": false,
+            "length": 9,
+            "position": 230,
+            "mandatory": false
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 12,
+            "position": 239,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "543": {
+        "TEXTO LIVRE - 1": {
+            "alphanumeric": true,
+            "length": 70,
+            "position": 4,
+            "mandatory": true
+        },
+        "TEXTO LIVRE - 2": {
+            "alphanumeric": true,
+            "length": 70,
+            "position": 74,
+            "mandatory": false
+        },
+        "TEXTO LIVRE - 3": {
+            "alphanumeric": true,
+            "length": 70,
+            "position": 144,
+            "mandatory": false
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 37,
+            "position": 214,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "544": {
+        "QUANTIDADE DE VOLUMES DA NOTA": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 4,
+            "mandatory": true
+        },
+        "QUANTIDADE DE VOLUMES ENTREGUES": {
+            "alphanumeric": false,
+            "length": 8,
+            "position": 12,
+            "mandatory": true
+        },
+        "CODIGO DO ITEM DA NOTA FISCAL": {
+            "alphanumeric": true,
+            "length": 20,
+            "position": 20,
+            "mandatory": true,
+            "description": "CÓDIGO DO PRODUTO"
+        },
+        "DESCRICAO DO ITEM DA NOTA FISCAL": {
+            "alphanumeric": true,
+            "length": 50,
+            "position": 40,
+            "mandatory": true,
+            "description": "NOME DO PRODUTO"
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 161,
+            "position": 90,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "545": {
+        "CNPJ DA EMPRESA CONTRATANTE DO FRETE": {
+            "alphanumeric": false,
+            "length": 14,
+            "position": 4,
+            "mandatory": true,
+            "description": "NO CASO DE REDESPACHO, PREENCHER COM O CGC DA TRANSPORTADORA SOLICITANTE"
+        },
+        "CNPJ DA EMPRESA EMISSORA DO CONHECIMENTO ORIGINADOR DA OCORRENCIA": {
+            "alphanumeric": false,
+            "length": 14,
+            "position": 18,
+            "mandatory": true
+        },
+        "FILIAL EMISSOR DO CTRC ORIGINADOR DA OCORRENCIA": {
+            "alphanumeric": true,
+            "length": 10,
+            "position": 32,
+            "mandatory": false,
+            "description": "PROCESSO DE REDESPACHO"
+        },
+        "SERIE DO CONHECIMENTO ORIGINADOR DA OCORRENCIA": {
+            "alphanumeric": true,
+            "length": 5,
+            "position": 42,
+            "mandatory": false,
+            "description": "PROCESSO DE REDESPACHO"
+        },
+        "NUMERO DO CONHECIMENTO ORIGINADOR DA OCORRENCIA": {
+            "alphanumeric": true,
+            "length": 12,
+            "position": 47,
+            "mandatory": true,
+            "description": "PROCESSO DE REDESPACHO"
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 192,
+            "position": 59,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    },
+    "549": {
+        "NUMERO DE REGISTRO DE OCORRENCIA": {
+            "alphanumeric": false,
+            "length": 4,
+            "position": 4,
+            "mandatory": true,
+            "description": "NÚMERO DE OCORRÊNCIAS DO REGISTRO “542”"
+        },
+        "FILLER": {
+            "alphanumeric": true,
+            "length": 242,
+            "position": 8,
+            "mandatory": false,
+            "description": "PREENCHER COM ESPAÇOS"
+        }
+    }
+}

@@ -1,7 +1,8 @@
 package com.tonyguerra.ocorrenparser.enums;
 
 public enum LayoutType {
-    LFG_OCORREN("lfg_ocorren.json");
+    VERSION_3_1("3_1.json"),
+    VERSION_5_0("5_0.json");
 
     private final String fileName;
 
