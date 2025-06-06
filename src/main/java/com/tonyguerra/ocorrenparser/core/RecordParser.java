@@ -3,8 +3,12 @@ package com.tonyguerra.ocorrenparser.core;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,19 +16,30 @@ import com.tonyguerra.ocorrenparser.data.RecordRow;
 import com.tonyguerra.ocorrenparser.enums.LayoutType;
 
 public final class RecordParser {
+    private static final List<String> VERSION_3_1_LINES = List.of("000", "340", "341", "342");
+    private static final List<String> VERSION_5_0_LINES = List.of(
+            "000",
+            "540",
+            "541",
+            "542",
+            "543",
+            "544",
+            "545",
+            "549");
+
     private final LayoutMap layout;
 
     public RecordParser(LayoutMap layout) {
         this.layout = layout;
     }
 
-    public List<RecordRow> parseFile(String filePath) {
-        if (!Files.exists(Paths.get(filePath))) {
+    public List<RecordRow> parseFile(Path filePath) {
+        if (!Files.exists(filePath)) {
             throw new IllegalArgumentException("File not found: " + filePath);
         }
 
         try {
-            final List<String> lines = Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
+            final List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
 
             return lines.stream()
                     .filter(line -> !line.trim().isEmpty())
@@ -36,10 +51,9 @@ public final class RecordParser {
         }
     }
 
-    public String parseFileToJSON(String filePath) {
+    public String parseFileToJSON(Path filePath) {
         final var records = parseFile(filePath);
 
-        // Agrupa os registros por tipo
         final var grouped = new LinkedHashMap<String, List<Map<String, String>>>();
 
         records.forEach(row -> {
@@ -113,6 +127,30 @@ public final class RecordParser {
         return new RecordRow(recordType, result);
     }
 
+    private static LayoutType detectLayoutType(Path filePath) {
+        try {
+            final List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
+
+            final Set<String> recordTypes = lines.stream()
+                    .filter(line -> line.length() >= 3)
+                    .map(line -> line.substring(0, 3))
+                    .collect(Collectors.toSet());
+
+            if (recordTypes.containsAll(VERSION_3_1_LINES)) {
+                return LayoutType.VERSION_3_1;
+            }
+
+            if (recordTypes.containsAll(VERSION_5_0_LINES)) {
+                return LayoutType.VERSION_5_0;
+            }
+
+            throw new IllegalArgumentException("Layout não reconhecido. Tipos de registro encontrados: " + recordTypes);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read file: " + filePath, e);
+        }
+    }
+
     public static RecordParser fromLayoutType(LayoutType layoutType) {
         try {
             final var inputStream = RecordParser.class.getClassLoader()
@@ -127,6 +165,18 @@ public final class RecordParser {
         } catch (final Exception e) {
             throw new RuntimeException("Failed to load layout: " + layoutType.getFileName(), e);
         }
+    }
+
+    public static String parseFromFilePathToJSON(Path filePath) {
+        if (!Files.exists(filePath)) {
+            throw new IllegalArgumentException("File not found: " + filePath);
+        }
+
+        final var layoutType = detectLayoutType(filePath);
+
+        final var parser = fromLayoutType(layoutType);
+
+        return parser.parseFileToJSON(filePath);
     }
 
 }
