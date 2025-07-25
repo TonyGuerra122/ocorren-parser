@@ -26,7 +26,7 @@ Projetado para uso com integrações EDI ou sistemas legados que utilizam regist
   <dependency>
     <groupId>com.github.TonyGuerra122</groupId>
     <artifactId>ocorren-parser</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
   </dependency>
 ```
 
@@ -100,7 +100,7 @@ public final class Main {
 ---
 
 ## 📑 Layout Permitido
-O **Arquivo Ocorren** deverá vir com os campos mapeado conforme o [lfg_ocorren.json](src/main/resources/layouts/lfg_ocorren.json)
+O **Arquivo Ocorren** deverá vir com os campos mapeado conforme o [3_1.json](src/main/resources/layouts/3_1.json) ou [5_0.json](src/main/resources/layouts/5_0.json)
 
 ---
 

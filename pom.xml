@@ -6,7 +6,7 @@
 
     <groupId>com.tonyguerra.ocorrenparser</groupId>
     <artifactId>ocorren-parser</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

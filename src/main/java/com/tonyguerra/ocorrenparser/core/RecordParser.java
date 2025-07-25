@@ -5,15 +5,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tonyguerra.ocorrenparser.data.RecordRow;
 import com.tonyguerra.ocorrenparser.enums.LayoutType;
+import com.tonyguerra.ocorrenparser.errors.IllegalFieldsException;
 
 public final class RecordParser {
     private static final List<String> VERSION_3_1_LINES = List.of("000", "340", "341", "342");
@@ -27,10 +31,17 @@ public final class RecordParser {
             "545",
             "549");
 
+    private final Map<String, List<String>> errorsFieldNCauses;
+
     private final LayoutMap layout;
 
     public RecordParser(LayoutMap layout) {
         this.layout = layout;
+        this.errorsFieldNCauses = new HashMap<>();
+    }
+
+    private void addFieldError(String fieldName, String cause) {
+        errorsFieldNCauses.computeIfAbsent(fieldName, k -> new ArrayList<>()).add(cause);
     }
 
     public List<RecordRow> parseFile(Path filePath) {
@@ -41,10 +52,18 @@ public final class RecordParser {
         try {
             final List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
 
-            return lines.stream()
-                    .filter(line -> !line.trim().isEmpty())
-                    .map(this::parseRow)
+            errorsFieldNCauses.clear();
+
+            final var parsedLines = IntStream.range(0, lines.size())
+                    .mapToObj(i -> parseRow(lines.get(i), i + 1))
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
+
+            if (!errorsFieldNCauses.isEmpty()) {
+                throw new IllegalFieldsException(errorsFieldNCauses);
+            }
+
+            return parsedLines;
 
         } catch (final Exception e) {
             throw new RuntimeException("Failed to read file: " + filePath, e);
@@ -72,27 +91,32 @@ public final class RecordParser {
         }
     }
 
-    private RecordRow parseRow(String row) {
+    private RecordRow parseRow(String row, int lineNumber) {
         if (row.length() < 3) {
-            throw new IllegalArgumentException("Row too short to contain a record type");
+            addFieldError("LINHA_" + lineNumber, "Muito curta para conter um tipo de registro");
+            return null;
         }
 
         final String recordType = row.substring(0, 3);
         final var fields = layout.getRecords(recordType);
 
         if (fields == null) {
-            throw new IllegalArgumentException("Unknown record type: " + recordType);
+            addFieldError("LINHA_" + lineNumber, "Tipo de registro desconhecido: " + recordType);
+            return null;
         }
 
         final var result = new LinkedHashMap<String, String>();
 
-        final int expectedLength = fields.values().stream()
-                .mapToInt(f -> f.position() + f.length())
-                .max().orElse(0);
+        final int expectedLength = fields.entrySet().stream()
+                .filter(entry -> !entry.getKey().equalsIgnoreCase("FILLER"))
+                .mapToInt(entry -> entry.getValue().position() - 1 + entry.getValue().length())
+                .max()
+                .orElse(0);
 
         if (row.length() < expectedLength) {
-            throw new IllegalArgumentException("Row too short for record type " + recordType + ": expected at least "
-                    + expectedLength + " characters");
+            addFieldError("LINHA_" + lineNumber, "Muito curta para tipo " + recordType + ": esperado no mínimo "
+                    + expectedLength + " caracteres");
+            return null;
         }
 
         for (final var entry : fields.entrySet()) {
@@ -100,8 +124,8 @@ public final class RecordParser {
             final var def = entry.getValue();
 
             if (def.position() <= 0) {
-                throw new IllegalArgumentException(
-                        "Field '" + fieldName + "' has an invalid position: " + def.position());
+                addFieldError("LINHA_" + lineNumber + " > " + fieldName, "Posição inválida: " + def.position());
+                continue;
             }
 
             final int start = def.position() - 1;
@@ -109,18 +133,22 @@ public final class RecordParser {
             final String value = row.substring(start, end).trim();
 
             if (!value.isEmpty()) {
-                if (def.alphanumeric() && !value.matches("[\\p{L}\\p{N}\\s]+")) {
+                if (def.alphanumeric() && !value.matches("[\\p{L}\\p{N}\\s.,;:]+")) {
                     if (!fieldName.equalsIgnoreCase("FILLER") || !value.isBlank()) {
-                        throw new IllegalArgumentException("Field '" + fieldName + "' must be alphanumeric");
+                        addFieldError("LINHA_" + lineNumber + " > " + fieldName,
+                                "Deve conter apenas caracteres alfanuméricos");
+                        continue;
                     }
                 }
                 if (!def.alphanumeric() && !value.matches("\\d+")) {
-                    throw new IllegalArgumentException("Field '" + fieldName + "' must be numeric");
+                    addFieldError("LINHA_" + lineNumber + " > " + fieldName, "Deve ser numérico");
+                    continue;
                 }
             }
 
             if (def.mandatory() && value.isEmpty()) {
-                throw new IllegalArgumentException("Mandatory field '" + fieldName + "' is empty");
+                addFieldError("LINHA_" + lineNumber + " > " + fieldName, "Campo obrigatório está vazio");
+                continue;
             }
 
             result.put(fieldName, value);
